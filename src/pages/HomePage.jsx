@@ -8,12 +8,19 @@ import { Controls } from '../components/Controls';
 import {
   selectCountriesAll,
   selectCountriesInfo,
+  selectSearchCountries,
 } from '../store/countries/countries-selectors';
 import { fetchCountries } from '../store/countries/countries-actions';
+import { setSearch } from '../store/controls/controls-actions';
+import { selectAllControls } from '../store/controls/controls-selectors';
 
 export const HomePage = () => {
   const dispatch = useDispatch();
-  const countries = useSelector(selectCountriesAll);
+  const { search, region } = useSelector(selectAllControls);
+
+  const countries = useSelector((state) =>
+    selectSearchCountries(state, { search, region }),
+  );
   const { status, error, qty } = useSelector(selectCountriesInfo);
   const navigate = useNavigate();
 
